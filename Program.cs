@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Silk.NET.SDL;
+using System.Diagnostics;
 
 namespace TheAdventure;
 
@@ -23,15 +24,30 @@ public static class Program
             var engine = new Engine(renderer, input);
 
             engine.InitializeWorld();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            long tickCount = 0;
 
             bool quit = false;
             while (!quit)
             {
+
                 quit = input.ProcessInput();
                 if (quit) break;
                 
                 engine.ProcessFrame();
                 engine.RenderFrame();
+
+                ++tickCount;
+
+                if (Globals.RUN_PERF_TEST && stopwatch.Elapsed.TotalSeconds > 2)
+                {
+                    stopwatch.Stop();
+                    Console.WriteLine((float)Math.Round(tickCount / stopwatch.Elapsed.TotalSeconds, 2) + " FPS (avg.)");
+                    tickCount = 0;
+                    stopwatch.Reset();
+                    stopwatch.Start();
+                }
             }
         }
 

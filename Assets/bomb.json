@@ -9,7 +9,7 @@
     },
     "fileName" : "BombExploding.png",
     "animations" : {
-        "Explode" : {
+        "BOMB_EXPLODE" : {
             "startFrame" : {
                 "row" : 0,
                 "col" : 0

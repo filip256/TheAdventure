@@ -52,7 +52,8 @@ public unsafe class GameWindow : IDisposable
             throw new Exception("Failed to create renderer.");
         }
 
-        _sdl.RenderSetVSync((Renderer*)renderer, 1);
+        if(Globals.RUN_PERF_TEST == false)
+            _sdl.RenderSetVSync((Renderer*)renderer, 1);
 
         return renderer;
     }

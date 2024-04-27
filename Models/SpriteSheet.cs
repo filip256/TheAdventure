@@ -26,9 +26,9 @@ public class SpriteSheet
     public string? FileName { get; set; }
 
     public Animation? ActiveAnimation { get; private set; }
-    public Dictionary<string, Animation> Animations { get; init; } = new();
+    public Dictionary<AnimationId, Animation> Animations { get; init; } = new();
 
-    private int _textureId = -1;
+    private TextureData _texture;
     private DateTimeOffset _animationStart = DateTimeOffset.MinValue;
 
     public SpriteSheet(){
@@ -49,8 +49,8 @@ public class SpriteSheet
         if(!string.IsNullOrWhiteSpace(parentFolder) && !string.IsNullOrWhiteSpace(FileName)){
             filePath = Path.Combine(parentFolder, FileName);
         }
-        if(_textureId == -1 && !string.IsNullOrWhiteSpace(filePath)){
-            _textureId = renderer.LoadTexture(filePath, out _);
+        if(_texture == null && !string.IsNullOrWhiteSpace(filePath)){
+            _texture = renderer.LoadTexture(filePath, out _);
         }
     }
 
@@ -67,9 +67,9 @@ public class SpriteSheet
         LoadTexture(renderer);
     }
 
-    public void ActivateAnimation(string name)
+    public void ActivateAnimation(AnimationId animationId)
     {
-        if (!Animations.TryGetValue(name, out var animation)) return;
+        if (!Animations.TryGetValue(animationId, out var animation)) return;
 
         ActiveAnimation = animation;
         _animationStart = DateTimeOffset.Now;
@@ -79,7 +79,7 @@ public class SpriteSheet
     {
         if (ActiveAnimation == null)
         {
-            renderer.RenderTexture(_textureId, new Rectangle<int>(0, 0, FrameWidth, FrameHeight),
+            renderer.RenderTexture(_texture, new Rectangle<int>(0, 0, FrameWidth, FrameHeight),
                 new Rectangle<int>(dest.X - FrameCenter.OffsetX, dest.Y - FrameCenter.OffsetY, FrameWidth, FrameHeight),
                 RendererFlip.None, angle, rotationCenter);
         }
@@ -105,10 +105,15 @@ public class SpriteSheet
             var currentRow = ActiveAnimation.StartFrame.Row + currentFrame / ColumnCount;
             var currentCol = ActiveAnimation.StartFrame.Col + currentFrame % ColumnCount;
 
-            renderer.RenderTexture(_textureId,
+            renderer.RenderTexture(_texture,
                 new Rectangle<int>(currentCol * FrameWidth, currentRow * FrameHeight, FrameWidth, FrameHeight),
                 new Rectangle<int>(dest.X - FrameCenter.OffsetX, dest.Y - FrameCenter.OffsetY, FrameWidth, FrameHeight),
                 ActiveAnimation.Flip, angle, rotationCenter);
         }
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
     }
 }

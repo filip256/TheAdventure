@@ -8,71 +8,71 @@
         "offsetY" : 42
     },
     "fileName" : "player.png",
-    "animations" : {
-        "IdleDown" : {
-            "startFrame" : {
-                "row" : 0,
-                "col" : 0
-            },
-            "endFrame" : {
-                "row" : 0,
-                "col" : 5
-            },
-            "durationMs" : 1000,
-            "loop" : true
-        },
-        "MoveLeft": {
-            "startFrame" : {
-                "row" : 4,
-                "col" : 0
-            },
-            "endFrame" : {
-                "row" : 4,
-                "col" : 5
-            },
-            "durationMs" : 1000,
-            "loop" : true,
-            "flip" : 1
-        },
-        "MoveRight": {
-            "startFrame" : {
-                "row" : 4,
-                "col" : 0
-            },
-            "endFrame" : {
-                "row" : 4,
-                "col" : 5
-            },
-            "durationMs" : 1000,
-            "loop" : true,
-            "flip" : 0
-        },
-        "MoveDown": {
-            "startFrame" : {
-                "row" : 3,
-                "col" : 0
-            },
-            "endFrame" : {
-                "row" : 3,
-                "col" : 5
-            },
-            "durationMs" : 1000,
-            "loop" : true,
-            "flip" : 0
-        },
-        "MoveUp": {
-            "startFrame" : {
-                "row" : 5,
-                "col" : 0
-            },
-            "endFrame" : {
-                "row" : 5,
-                "col" : 5
-            },
-            "durationMs" : 1000,
-            "loop" : true,
-            "flip" : 0
-        }
+  "animations": {
+    "PLAYER_IDLE_DOWN": {
+      "startFrame": {
+        "row": 0,
+        "col": 0
+      },
+      "endFrame": {
+        "row": 0,
+        "col": 5
+      },
+      "durationMs": 1000,
+      "loop": true
+    },
+    "PLAYER_MOVE_LEFT": {
+      "startFrame": {
+        "row": 4,
+        "col": 0
+      },
+      "endFrame": {
+        "row": 4,
+        "col": 5
+      },
+      "durationMs": 1000,
+      "loop": true,
+      "flip": 1
+    },
+    "PLAYER_MOVE_RIGHT": {
+      "startFrame": {
+        "row": 4,
+        "col": 0
+      },
+      "endFrame": {
+        "row": 4,
+        "col": 5
+      },
+      "durationMs": 1000,
+      "loop": true,
+      "flip": 0
+    },
+    "PLAYER_MOVE_DOWN": {
+      "startFrame": {
+        "row": 3,
+        "col": 0
+      },
+      "endFrame": {
+        "row": 3,
+        "col": 5
+      },
+      "durationMs": 1000,
+      "loop": true,
+      "flip": 0
+    },
+    "PLAYER_MOVE_UP": {
+      "startFrame": {
+        "row": 5,
+        "col": 0
+      },
+      "endFrame": {
+        "row": 5,
+        "col": 5
+      },
+      "durationMs": 1000,
+      "loop": true,
+      "flip": 0
     }
+  }
     
 }

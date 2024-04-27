@@ -1,3 +1,5 @@
+using TheAdventure.Models;
+
 public class Tile
 {
     public int Id { get; set; }
@@ -5,5 +7,5 @@ public class Tile
     public int ImageWidth { get; set; }
     public int ImageHeight { get; set; }
 
-    public int InternalTextureId { get; set; } = -1;
+    public TextureData InternalTexture { get; set; }
 }
