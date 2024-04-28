@@ -1,6 +1,7 @@
 public class Layer
 {
     public int[] Data { get; set; }
+    public Tile[] Tiles { get; set; }
     public int Height { get; set; }
     public int Width {get; set; }
     public int X { get; set; }
