@@ -31,11 +31,8 @@ public class PlayerObject : RenderableGameObject
 
         var pixelsToMove = time * PixelsPerSecond;
 
-        var x = Position.X + (int)(right * pixelsToMove);
-        x -= (int)(left * pixelsToMove);
-
-        var y = Position.Y - (int)(up * pixelsToMove);
-        y += (int)(down * pixelsToMove);
+        var x = Position.X + (int)(right * pixelsToMove) - (int)(left * pixelsToMove);
+        var y = Position.Y - (int)(up * pixelsToMove) + (int)(down * pixelsToMove);
 
         if (x < 10)
         {

@@ -53,7 +53,7 @@ namespace TheAdventure
 
                 refTileSet.Set = tileSet;
             }
-
+            level.SetTileReferences();
             _currentLevel = level;
             /*SpriteSheet spriteSheet = new(_renderer, Path.Combine("Assets", "player.png"), 10, 6, 48, 48, new FrameOffset() { OffsetX = 24, OffsetY = 42 });
             spriteSheet.Animations["IdleDown"] = new SpriteSheet.Animation()
@@ -83,12 +83,12 @@ namespace TheAdventure
             {
                 _lastUpdate = currentTime;
 
-                bool up = _input.IsUpPressed();
-                bool down = _input.IsDownPressed();
-                bool left = _input.IsLeftPressed();
-                bool right = _input.IsRightPressed();
+                var up = _input.IsUpPressed() ? 1.0 : 0.0;
+                var down = _input.IsDownPressed() ? 1.0 : 0.0 ;
+                var left = _input.IsLeftPressed() ? 1.0 : 0.0;
+                var right = _input.IsRightPressed() ? 1.0 : 0.0;
 
-                _player.UpdatePlayerPosition(up ? 1.0 : 0.0, down ? 1.0 : 0.0, left ? 1.0 : 0.0, right ? 1.0 : 0.0,
+                _player.UpdatePlayerPosition(up, down, left, right,
                     _currentLevel.Width * _currentLevel.TileWidth, _currentLevel.Height * _currentLevel.TileHeight,
                     secsSinceLastFrame);
 
@@ -116,26 +116,13 @@ namespace TheAdventure
             _renderer.PresentFrame();
         }
 
-        private Tile? GetTile(int id)
-        {
-            if (_currentLevel == null) return null;
-            foreach (var tileSet in _currentLevel.TileSets)
-            {
-                foreach (var tile in tileSet.Set.Tiles)
-                {
-                    if (tile.Id == id)
-                    {
-                        return tile;
-                    }
-                }
-            }
-
-            return null;
-        }
-
         private void RenderTerrain()
         {
-            if (_currentLevel == null) return;
+            if (_currentLevel == null)
+                return;
+
+            var src = new Rectangle<int>(0, 0, _currentLevel.TileWidth, _currentLevel.TileHeight);
+
             for (var layer = 0; layer < _currentLevel.Layers.Length; ++layer)
             {
                 var cLayer = _currentLevel.Layers[layer];
@@ -144,13 +131,8 @@ namespace TheAdventure
                 {
                     for (var j = 0; j < _currentLevel.Height; ++j)
                     {
-                        var cTileId = cLayer.Data[j * cLayer.Width + i] - 1;
-                        var cTile = GetTile(cTileId);
-                        if (cTile == null) continue;
-
-                        var src = new Rectangle<int>(0, 0, cTile.ImageWidth, cTile.ImageHeight);
-                        var dst = new Rectangle<int>(i * cTile.ImageWidth, j * cTile.ImageHeight, cTile.ImageWidth,
-                            cTile.ImageHeight);
+                        var cTile = cLayer.Tiles[j * cLayer.Width + i];
+                        var dst = src.GetTranslated(new Vector2D<int>(i * _currentLevel.TileWidth, j * _currentLevel.TileHeight));
 
                         _renderer.RenderTexture(cTile.InternalTexture, src, dst);
                     }
